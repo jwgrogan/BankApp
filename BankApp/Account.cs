@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BankApp
+{
+
+    enum TypeOfAccount
+    {
+        Checking,
+        Savings,
+        CD
+    }
+    /// <summary>
+    /// Account object for the Bank Application    
+    /// </summary>
+    class Account
+    {
+        private static int lastAccountNumber = 0;
+        #region Properties
+        /// <summary>
+        /// Account number for the account
+        /// </summary>
+        public int AccountNumber { get; }
+
+        public string AccountName { get; set; }
+
+        public decimal Balance { get; private set; }
+
+        public DateTime CreateDate { get; set; }
+
+        public string EmailAddress { get; set; }
+
+        public TypeOfAccount AccountType { get; set; }
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        /// Constructors tell how to build an instance of the class; will always have the same name as the class
+        /// </summary>
+        public Account()
+        {
+            AccountNumber = ++lastAccountNumber;
+            CreateDate = DateTime.UtcNow;
+        }
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Deposit money into your account
+        /// </summary>
+        /// <param name="amount"></param>Amount to be deposited
+        public void Deposit(decimal amount)
+        {
+            Balance += amount;
+        }
+
+        public void Withdraw(decimal amount)
+        {
+            Balance = +amount;
+        }
+        #endregion
+    }
+}

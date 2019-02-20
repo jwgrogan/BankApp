@@ -12,7 +12,7 @@ namespace BankApp
     class Transaction
     {
 
-        public int TansactionID { get; set; }
+        public int TransactionId { get; set; }
         public DateTime TransactionDate { get; set; }
         public decimal TransactionAmount { get; set; }
         public string Description { get; set; }

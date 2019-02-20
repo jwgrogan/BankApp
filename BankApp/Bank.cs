@@ -36,7 +36,7 @@ namespace BankApp
 
         public static IEnumerable<Transaction> GetAllTransactions(int accountNumber)
         {
-            return transactions.Where(transaction => transaction.Account.AccountNumber == accountNumber).OrderByDescending(testc => testc.TransactionDate);
+            return transactions.Where(transaction => transaction.Account.AccountNumber == accountNumber).OrderByDescending(collumn => collumn.TransactionDate);
         }
 
         public static void Deposit(int accountNumber, decimal amount)
@@ -53,6 +53,7 @@ namespace BankApp
                 Description = "Deposited through the bank",
                 TransactionType = TransactionType.Credit,
                 TransactionDate = DateTime.UtcNow,
+                Account = account
             };
 
             transactions.Add(transaction);
@@ -65,6 +66,17 @@ namespace BankApp
                 return;
 
             account.Withdraw(amount);
+
+            var transaction = new Transaction
+            {
+                TransactionAmount = amount,
+                Description = "Withdrawal through the bank",
+                TransactionType = TransactionType.Debit,
+                TransactionDate = DateTime.UtcNow,
+                Account = account
+            };
+
+            transactions.Add(transaction);
         }
 
     }

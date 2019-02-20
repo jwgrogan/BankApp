@@ -57,7 +57,11 @@ namespace BankApp
 
                     case "3":
                         PrintAllAccounts();
-
+                        Console.Write("Account Number: ");
+                        accountNumber = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Amount to withdraw:");
+                        amount = Convert.ToDecimal(Console.ReadLine());
+                        Bank.Withdraw(accountNumber, amount);
                         break;
 
                     case "4":
@@ -68,8 +72,8 @@ namespace BankApp
                         PrintAllAccounts();
                         Console.Write("Account number:");
                         accountNumber = Convert.ToInt32(Console.ReadLine());
-                        var transations = Bank.GetAllTransactions(accountNumber);
-                        foreach (var transaction in transactions) ;
+                        var transactions = Bank.GetAllTransactions(accountNumber);
+                        foreach (var transaction in transactions)
                         {
                             Console.WriteLine($"TD: {transaction.TransactionDate}, TA: {transaction.TransactionAmount}, TT: {transaction.TransactionType}");
                         }

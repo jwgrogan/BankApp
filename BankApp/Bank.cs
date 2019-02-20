@@ -7,8 +7,7 @@ namespace BankApp
 {
     static class Bank
     {
-        private static List<Account> accounts = new List<Account>();
-        private static List<Transaction> transactions = new List<Transaction>();
+        private static BankModel db = new BankModel();
         
         public static Account CreateAccount(string accountName, string emailAddress,
             TypeOfAccount accountType = TypeOfAccount.Checking, decimal initialDeposit = 0)
@@ -24,26 +23,27 @@ namespace BankApp
                 account.Deposit(initialDeposit);
             }
 
-            accounts.Add(account);
+            db.Accounts.Add(account);
+            db.SaveChanges();
             return account;
         }
 
         public static IEnumerable<Account> GetAllAccounts(string emailAddress)
         {
-            return accounts.Where(account => account.EmailAddress == emailAddress);
+            return db.Accounts.Where(account => account.EmailAddress == emailAddress);
                 
          }
 
         public static IEnumerable<Transaction> GetAllTransactions(int accountNumber)
         {
-            return transactions.Where(transaction => transaction.Account.AccountNumber == accountNumber).OrderByDescending(collumn => collumn.TransactionDate);
+            return db.Transactions.Where(transaction => transaction.Account.AccountNumber == accountNumber).OrderByDescending(collumn => collumn.TransactionDate);
         }
 
         public static void Deposit(int accountNumber, decimal amount)
         {
-            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            var account = db.Accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
             if (account == null)
-                return;
+                throw new ArgumentOutOfRangeException("accountNumber", "Invalid account number");
 
             account.Deposit(amount);
 
@@ -56,14 +56,15 @@ namespace BankApp
                 Account = account
             };
 
-            transactions.Add(transaction);
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
         }
 
         public static void Withdraw(int accountNumber, decimal amount)
         {
-            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+            var account = db.Accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
             if (account == null)
-                return;
+                throw new ArgumentOutOfRangeException("accountNumber", "Invalid account number");
 
             account.Withdraw(amount);
 
@@ -76,7 +77,8 @@ namespace BankApp
                 Account = account
             };
 
-            transactions.Add(transaction);
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
         }
 
     }

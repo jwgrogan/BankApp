@@ -29,6 +29,8 @@ namespace BankApp
                 entity.Property(a => a.EmailAddress).IsRequired().HasMaxLength(50);
 
                 entity.Property(a => a.AccountType).IsRequired();
+
+                entity.Property(a => a.AccountName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Transaction>(entity =>

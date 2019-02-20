@@ -21,13 +21,13 @@ namespace BankApp
         /// <summary>
         /// Account number for the account
         /// </summary>
-        public int AccountNumber { get; }
+        public int AccountNumber { get; set; }
 
         public string AccountName { get; set; }
 
         public decimal Balance { get; private set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { get; }
 
         public string EmailAddress { get; set; }
 
@@ -40,7 +40,6 @@ namespace BankApp
         /// </summary>
         public Account()
         {
-            AccountNumber = ++lastAccountNumber;
             CreateDate = DateTime.UtcNow;
         }
         #endregion
@@ -55,9 +54,18 @@ namespace BankApp
         {
             Balance += amount;
         }
-
+        /// <summary>
+        /// Withdraw money from the account
+        /// </summary>
+        /// <param name="amount">amount to withdraw</param>
+        /// <exception cref="NSFException" />
         public void Withdraw(decimal amount)
         {
+            if (amount > Balance)
+            {
+                throw new NSFException("Insufficient funds in the account.");
+            }
+
             Balance = +amount;
         }
         #endregion

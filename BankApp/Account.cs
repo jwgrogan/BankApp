@@ -5,7 +5,7 @@ using System.Text;
 namespace BankApp
 {
 
-    enum TypeOfAccount
+    public enum TypeOfAccount
     {
         Checking,
         Savings,
@@ -14,7 +14,7 @@ namespace BankApp
     /// <summary>
     /// Account object for the Bank Application    
     /// </summary>
-    class Account
+    public class Account
     {
         private static int lastAccountNumber = 0;
         #region Properties

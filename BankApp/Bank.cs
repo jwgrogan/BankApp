@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BankApp
 {
-    static class Bank
+    public static class Bank
     {
         private static BankModel db = new BankModel();
         
